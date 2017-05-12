@@ -6,44 +6,46 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:31:28 by frenaud           #+#    #+#             */
-/*   Updated: 2017/04/20 15:52:14 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 12:12:18 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		itoa_len(int n)
+void	itoa_isnegative(int *n, int *negative)
 {
-	int i;
-
-	i = 1;
-	while (n /= 10)
-		i++;
-	return (i);
+	if (*n < 0)
+	{
+		*n *= -1;
+		*negative = 1;
+	}
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	char			*str;
-	int				len;
-	unsigned int	nbr;
+	int		tmpn;
+	int		len;
+	int		negative;
+	char	*str;
 
-	len = itoa_len(n);
-	nbr = n;
-	if (n < 0)
-	{
-		nbr = -n;
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	tmpn = n;
+	len = 2;
+	negative = 0;
+	itoa_isnegative(&n, &negative);
+	while (tmpn /= 10)
 		len++;
-	}
-	if (!(str = (char *)malloc(sizeof(char) * len)))
+	len += negative;
+	if ((str = (char*)malloc(sizeof(char) * len)) == NULL)
 		return (NULL);
-	str[--len] = nbr % 10 + '0';
-	while (nbr /= 10)
+	str[--len] = '\0';
+	while (len--)
 	{
-		len--;
-		str[len] = nbr % 10 + '0';
+		str[len] = n % 10 + '0';
+		n = n / 10;
 	}
-	if (n < 0)
+	if (negative)
 		str[0] = '-';
 	return (str);
 }

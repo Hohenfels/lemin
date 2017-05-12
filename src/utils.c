@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 12:13:03 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/08 20:04:07 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 15:53:05 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		check_int(char *str)
 
 	n = ft_atoi(str);
 	n_str = ft_itoa(n);
-	if (ft_strcmp(str, n_str))
+	if (ft_strcmp(str, n_str) != 0)
 	{
 		free(n_str);
 		return (0);
@@ -55,4 +55,19 @@ void	free_array(char **array)
 		++i;
 	}
 	array = NULL;
+}
+
+int		get_size_map(t_pipe *pipes)
+{
+	int		i;
+	t_pipe 	*pipe;
+
+	i = 0;
+	pipe = pipes;
+	while (pipe)
+	{
+		++i;
+		pipe = pipe->next;
+	}
+	return (i);
 }

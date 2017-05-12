@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 14:58:04 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/08 22:33:41 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 17:01:07 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define UKNW 20
 #define START 21
 #define END 22
+
 
 typedef struct		s_room
 {
@@ -37,6 +38,14 @@ typedef struct		s_pipe
 	struct s_pipe	*next;
 }					t_pipe;
 
+typedef struct		s_tree
+{
+	int				floor;
+	struct s_room	*room;
+	struct s_tree	*parent;
+	struct s_tree	**sons;
+}					t_tree;
+
 typedef struct		s_env
 {
 	int				ants;
@@ -44,8 +53,10 @@ typedef struct		s_env
 	t_room			*end;
 	t_room			*rooms;
 	t_pipe			*pipes;
+	t_tree			*tree;
 }					t_env;
 
+t_tree	*create_tree(t_env *env);
 int		get_ants(t_env *env, char *line);
 int		get_rooms(t_env *env, char *line);
 int		get_pipes(t_env *env, char *line);
@@ -53,6 +64,7 @@ int		get_flag(char *line);
 int		check_format(char *line);
 int		check_int(char *nb);
 void	free_array(char **array);
+int		get_size_map(t_pipe *pipes);
 void	error(char *str);
 
 #endif

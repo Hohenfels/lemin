@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:03:22 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/08 22:34:04 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 15:56:28 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,46 @@ t_env		*parse_data(void)
 	init(&env);
 	while ((get_next_line(0, &line) > 0))
 	{
-		ft_putendl(line);
 		if ((flag = (*parse[step])(env, line)) == 1)
 			++step;
 		else if (ft_strlen(line) == 0 || flag == -1)
 			break;
 	}
 	return (env);
+}
+
+void		print_rooms(t_env *env)
+{
+	t_room *start;
+	t_room *end;
+	t_room *rooms;
+
+	start = env->start;
+	end = env->end;
+	rooms = env->rooms;
+	ft_printf("ROOMS :\n");
+	while (rooms)
+	{
+		ft_printf("Name = %s\nX = %d\n\
+Y = %d\n", rooms->name, rooms->x, rooms->y);
+		rooms = rooms->next;
+	}
+	ft_printf("START : %s\nEND : %s\n", start->name, end->name);
+}
+
+void		print_pipes(t_env *env)
+{
+	t_pipe *pipes;
+
+	pipes = env->pipes;
+	while (pipes)
+	{
+		ft_putstr(pipes->room_a->name);
+		ft_putchar('-');
+		ft_putstr(pipes->room_b->name);
+		ft_putendl("");
+		pipes = pipes->next;
+	}
 }
 
 int			main(void)
@@ -52,6 +85,8 @@ int			main(void)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		error("Malloc error");
 	env = parse_data();
-	ft_putendl(env->start->name);
-	ft_putendl(env->end->name);
+	env->tree = create_tree(env);
+	print_rooms(env);
+	print_pipes(env);
+	ft_printf("%s\n", env->tree->room->name);
 }

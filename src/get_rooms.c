@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 11:45:07 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/08 22:32:46 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 14:04:33 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		prepare_create(t_env *env, char *line, int flag)
 	}
 	if (ft_strchr(array[0], '-') || ft_strchr(array[0], 'L'))
 		return (-1);
-	if (!check_int(array[1]) || !check_int(array[2]))
+	if (check_int(array[1]) == 0 || check_int(array[2]) == 0)
 		return (-1);
 	room = create_room(array);
 	free_array(array);
@@ -89,8 +89,8 @@ int		get_rooms(t_env *env, char *line)
 			return (-1);
 		if (last_flag > 20)
 			flag = last_flag;
-		if ((flag == START && env->start != NULL)
-			|| (flag == END && env->end != NULL))
+		if ((flag == START && env->start != NULL) ||
+			(flag == END && env->end != NULL))
 			return (-1);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 11:55:32 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/08 16:34:37 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/12 12:01:42 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 
 int		which_one(char *line)
 {
-	if (ft_strcmp(line, "##start"))
+	if (ft_strcmp(line, "##start") == 0)
 		return (START);
-	if (ft_strcmp(line, "##end"))
+	if (ft_strcmp(line, "##end") == 0)
 		return (END);
 	return (UKNW);
 }
