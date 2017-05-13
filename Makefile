@@ -6,7 +6,7 @@
 #    By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/29 15:06:49 by frenaud           #+#    #+#              #
-#    Updated: 2017/05/12 14:55:05 by frenaud          ###   ########.fr        #
+#    Updated: 2017/05/13 10:49:43 by frenaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = 	./src/get_ants.c\
 		./src/get_pipes.c\
 		./src/get_rooms.c\
 		./src/get_flag.c\
-		./src/create_tree.c\
+		./src/get_links.c\
 		./src/utils.c\
 		./src/error.c\
 

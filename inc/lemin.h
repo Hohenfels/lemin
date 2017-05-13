@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 14:58:04 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/12 17:01:07 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/13 11:38:34 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,16 @@ typedef struct		s_room
 	char			*name;
 	int				x;
 	int				y;
+	struct	s_link	*link;
 	struct	s_room	*next;
 
 }					t_room;
+
+typedef struct		s_link
+{
+	t_room			*room;
+	struct s_link	*next;
+}					t_link;
 
 typedef struct		s_pipe
 {
@@ -38,14 +45,6 @@ typedef struct		s_pipe
 	struct s_pipe	*next;
 }					t_pipe;
 
-typedef struct		s_tree
-{
-	int				floor;
-	struct s_room	*room;
-	struct s_tree	*parent;
-	struct s_tree	**sons;
-}					t_tree;
-
 typedef struct		s_env
 {
 	int				ants;
@@ -53,10 +52,9 @@ typedef struct		s_env
 	t_room			*end;
 	t_room			*rooms;
 	t_pipe			*pipes;
-	t_tree			*tree;
 }					t_env;
 
-t_tree	*create_tree(t_env *env);
+void	get_links(t_env *env);
 int		get_ants(t_env *env, char *line);
 int		get_rooms(t_env *env, char *line);
 int		get_pipes(t_env *env, char *line);

@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 11:45:07 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/12 14:04:33 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/13 16:01:53 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_room	*create_room(char **array)
 	room->name = ft_strdup(array[0]);
 	room->x = ft_atoi(array[1]);
 	room->y = ft_atoi(array[2]);
+	room->link = NULL;
 	room->next = NULL;
 	return (room);
 }
