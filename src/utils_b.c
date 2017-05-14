@@ -1,58 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_b.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/08 12:13:03 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 19:57:56 by frenaud          ###   ########.fr       */
+/*   Created: 2017/05/14 20:07:23 by frenaud           #+#    #+#             */
+/*   Updated: 2017/05/14 21:23:43 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lemin.h"
 
-int		check_format(char *line)
+t_track	*new_tracks(t_room *room)
 {
-	int		nb;
-	char	*s_nb;
+	t_track	*ret;
 
-	nb = ft_atoi(line);
-	s_nb = ft_itoa(nb);
-	if (ft_strcmp(s_nb, line) == 0)
-	{
-		free(s_nb);
-		return (-1);
-	}
-	free(s_nb);
-	return (0);
+	if (!(ret = (t_track *)ft_memalloc(sizeof(t_track))))
+		return (NULL);
+	ret->room = room;
+	ret->next = NULL;
+	return (ret);
 }
 
-int		check_int(char *str)
+t_path	*new_paths(t_track *track, int size)
 {
-	int			n;
-	char		*n_str;
+	t_path 	*ret;
 
-	n = ft_atoi(str);
-	n_str = ft_itoa(n);
-	if (ft_strcmp(str, n_str) != 0)
-	{
-		free(n_str);
-		return (0);
-	}
-	free(n_str);
-	return (1);
+	if (!(ret = (t_path *)ft_memalloc(sizeof(t_path))))
+		return (NULL);
+	ret->tracks = track;
+	ret->size = size;
+	ret->visited = 0;
+	ret->next = NULL;
+	return (ret);
 }
 
-void	free_array(char **array)
+int		get_size_link(t_link *link)
 {
 	int		i;
 
 	i = 0;
-	while (array[i])
+	while (link)
 	{
-		free(array[i]);
 		++i;
+		link = link->next;
 	}
-	array = NULL;
+	return (i);
 }

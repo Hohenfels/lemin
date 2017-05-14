@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:03:22 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 11:39:24 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/14 21:54:28 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	init(t_env **env)
 	(*env)->end = NULL;
 	(*env)->rooms = NULL;
 	(*env)->pipes = NULL;
+	(*env)->paths = NULL;
 }
 
 t_env		*parse_data(void)
@@ -36,72 +37,44 @@ t_env		*parse_data(void)
 	init(&env);
 	while ((get_next_line(0, &line) > 0))
 	{
+		ft_putendl(line);
 		if ((flag = (*parse[step])(env, line)) == 1)
 			++step;
 		else if (ft_strlen(line) == 0 || flag == -1)
 			break;
 	}
+	ft_putchar('\n');
 	get_links(env);
 	return (env);
 }
 
-void		print_rooms(t_env *env)
+void	print_pat(t_env *env)
 {
-	t_room *start;
-	t_room *end;
-	t_room *rooms;
+	int		i;
+	t_path 	*tmp;
+	t_track *tmp2;
 
-	start = env->start;
-	end = env->end;
-	rooms = env->rooms;
-	ft_printf("ROOMS :\n");
-	while (rooms)
+	tmp = env->final_path;
+	i = 1;
+	if (tmp == NULL)
 	{
-		ft_printf("Name = %s\nX = %d\n\
-Y = %d\n", rooms->name, rooms->x, rooms->y);
-		rooms = rooms->next;
+		ft_putendl("NO PATHS");
+		return ;
 	}
-	ft_printf("START : %s\nEND : %s\n", start->name, end->name);
-}
-
-void		print_pipes(t_env *env)
-{
-	t_pipe *pipes;
-
-	pipes = env->pipes;
-	ft_printf("PIPES BETWEEN ROOMS\n\
-----------------------------------\n");
-	while (pipes)
+	while (tmp != NULL)
 	{
-		ft_putstr(pipes->room_a->name);
-		ft_putchar('-');
-		ft_putstr(pipes->room_b->name);
-		ft_putendl("");
-		pipes = pipes->next;
-	}
-}
-
-void		print_links(t_env *env)
-{
-	t_link	*link;
-	t_room 	*room;
-
-	room = env->rooms;
-	ft_printf("LINKS BETWEEN ROOMS\n\
-----------------------------------\n");
-	while (room)
-	{
-		link = room->link;
-		ft_putstr("ROOM : ");
-		ft_putendl(room->name);
-		while (link)
+		tmp2 = tmp->tracks;
+		ft_printf("Path [n.%d] | ", i);
+		while (tmp2)
 		{
-			ft_putstr(link->room->name);
-			ft_putchar(' ');
-			link = link->next;
+			ft_putstr(tmp2->room->name);
+			if (tmp2->next)
+				ft_putstr(" -> ");
+			tmp2 = tmp2->next;
 		}
-		room = room->next;
-		ft_putchar('\n');
+		ft_putstr("\n");
+		++i;
+		tmp = tmp->next;
 	}
 }
 
@@ -112,8 +85,6 @@ int			main(void)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		error("Malloc error");
 	env = parse_data();
-	// print_rooms(env);
-	//print_pipes(env);
-	print_links(env);
-	//ft_printf("%s\n", env->rooms->link->next->room->link->room->name);
+	algo_this(env);
+	print_pat(env);
 }
