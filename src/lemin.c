@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:03:22 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 21:54:28 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/15 01:01:07 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_env		*parse_data(void)
 	return (env);
 }
 
-void	print_pat(t_env *env)
+void	print_path(t_env *env)
 {
 	int		i;
 	t_path 	*tmp;
@@ -78,13 +78,22 @@ void	print_pat(t_env *env)
 	}
 }
 
-int			main(void)
+int			main(int argc, char **argv)
 {
 	t_env 	*env;
 
+	if (argc < 2)
+	error("type -help to show ..help");
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		error("Malloc error");
 	env = parse_data();
+	if (env->ants == 0)
+		error("No ants found");
+	if (env->pipes == NULL)
+		error("No pipes");
 	algo_this(env);
-	print_pat(env);
+	if (argc == 2)
+		if (ft_strcmp(argv[1], "--pathonly") == 0)
+			print_path(env);
+	return (0);
 }

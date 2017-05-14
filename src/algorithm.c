@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 11:53:59 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 20:59:08 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/14 22:57:12 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	swap_paths(t_path *p1, t_path *p2)
 	p2->size = t_size;
 }
 
-void	sort_paths(t_env *env)
+int		sort_paths(t_env *env)
 {
 	int		i;
 	int		nb;
@@ -34,7 +34,7 @@ void	sort_paths(t_env *env)
 	i = 0;
 	nb = 0;
 	if (env->paths == NULL || env->paths->next == NULL)
-		return ;
+		return (0);
 	tmp = env->paths;
 	while (tmp && ++nb > 0)
 		tmp = tmp->next;
@@ -48,6 +48,7 @@ void	sort_paths(t_env *env)
 			tmp = tmp->next;
 		}
 	}
+	return (1);
 }
 
 
@@ -57,8 +58,10 @@ void	algo_this(t_env *env)
 	int		e_link;
 	int		max;
 
-	get_paths(env, NULL, env->start, NULL);
-	sort_paths(env);
+	if (get_paths(env, NULL, env->start, NULL) == 1)
+		return ;
+	if (sort_paths(env) == 0)
+		return;
 	s_link = get_size_link(env->start->link);
 	e_link = get_size_link(env->end->link);
 	if (s_link < e_link)

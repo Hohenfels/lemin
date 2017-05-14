@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 20:01:49 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 21:52:04 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/15 00:38:40 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		get_paths(t_env *env, t_track *trail, t_room *room, t_link *tmp2)
 		trail = new_tracks(room);
 	else
 		tmp->next = new_tracks(room);
-	if (!ft_strcmp(room->name, env->end->name))
+	if (ft_strcmp(room->name, env->end->name) == 0)
 	{
 		save_path(trail, env);
 		return (1);
@@ -110,7 +110,7 @@ int		get_paths(t_env *env, t_track *trail, t_room *room, t_link *tmp2)
 	tmp2 = room->link;
 	while (tmp2)
 	{
-		if (!is_already_inside(trail, tmp2->room))
+		if (is_already_inside(trail, tmp2->room) == 0)
 		{
 			get_paths(env, trail, tmp2->room, NULL);
 			cut_last(trail);
