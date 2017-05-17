@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 20:41:26 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 21:49:29 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/17 15:35:09 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ t_path		*get_final_paths(t_env *env, int max)
 	i = 0;
 	reset_array(new_p, max);
 	if ((tmp_p = env->paths) == NULL || max == 0)
+	{
 		return (NULL);
+	}
 	while (i < max)
 	{
 		if (!check_duplicate_array(tmp_p, new_p, max, env))

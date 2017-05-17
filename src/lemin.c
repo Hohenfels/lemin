@@ -6,20 +6,25 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:03:22 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/15 01:01:07 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/17 17:29:08 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lemin.h"
 
-static void	init(t_env **env)
+t_env	*init(void)
 {
-	(*env)->ants = 0;
-	(*env)->start = NULL;
-	(*env)->end = NULL;
-	(*env)->rooms = NULL;
-	(*env)->pipes = NULL;
-	(*env)->paths = NULL;
+	t_env *env;
+
+	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
+		return (NULL);
+	env->ants = 0;
+	env->start = NULL;
+	env->end = NULL;
+	env->rooms = NULL;
+	env->pipes = NULL;
+	env->paths = NULL;
+	return (env);
 }
 
 t_env		*parse_data(void)
@@ -34,7 +39,7 @@ t_env		*parse_data(void)
 	parse[0] = get_ants;
 	parse[1] = get_rooms;
 	parse[2] = get_pipes;
-	init(&env);
+	env = init();
 	while ((get_next_line(0, &line) > 0))
 	{
 		ft_putendl(line);
@@ -48,52 +53,54 @@ t_env		*parse_data(void)
 	return (env);
 }
 
-void	print_path(t_env *env)
+void		manage_error(t_env *env)
 {
-	int		i;
-	t_path 	*tmp;
-	t_track *tmp2;
+	if (env == NULL)
+		error("Error");
+	else if (env->ants == 0)
+		error("No ants found");
+	else if (env->start == NULL || env->end == NULL)
+		error("No start nor end");
+	else if (env->rooms == NULL)
+		error("No rooms");
+	else if (env->pipes == NULL)
+		error("No pipes");
+}
 
-	tmp = env->final_path;
-	i = 1;
-	if (tmp == NULL)
+void		print_links(t_env *env)
+{
+	t_link	*link;
+	t_room 	*room;
+
+	room = env->rooms;
+	ft_printf("LINKS BETWEEN ROOMS\n\
+----------------------------------\n");
+	while (room)
 	{
-		ft_putendl("NO PATHS");
-		return ;
-	}
-	while (tmp != NULL)
-	{
-		tmp2 = tmp->tracks;
-		ft_printf("Path [n.%d] | ", i);
-		while (tmp2)
+		link = room->link;
+		ft_putstr("ROOM : ");
+		ft_putendl(room->name);
+		while (link)
 		{
-			ft_putstr(tmp2->room->name);
-			if (tmp2->next)
-				ft_putstr(" -> ");
-			tmp2 = tmp2->next;
+			ft_putstr(link->room->name);
+			ft_putchar(' ');
+			link = link->next;
 		}
-		ft_putstr("\n");
-		++i;
-		tmp = tmp->next;
+		room = room->next;
+		ft_putchar('\n');
 	}
 }
 
-int			main(int argc, char **argv)
+int			main(void)
 {
 	t_env 	*env;
 
-	if (argc < 2)
-	error("type -help to show ..help");
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		error("Malloc error");
 	env = parse_data();
-	if (env->ants == 0)
-		error("No ants found");
-	if (env->pipes == NULL)
-		error("No pipes");
+	manage_error(env);
 	algo_this(env);
-	if (argc == 2)
-		if (ft_strcmp(argv[1], "--pathonly") == 0)
-			print_path(env);
+	//ants_march(env);
+	print_path(env);
 	return (0);
 }

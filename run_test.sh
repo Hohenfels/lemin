@@ -1,1 +1,1 @@
-./a.out 2 13 > example && ./lem-in < example
+./a.out 40 2 > example && ./lem-in < example

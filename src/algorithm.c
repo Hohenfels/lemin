@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 11:53:59 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 22:57:12 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/17 15:56:17 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int		sort_paths(t_env *env)
 
 void	algo_this(t_env *env)
 {
+	int		max;
 	int		s_link;
 	int		e_link;
-	int		max;
 
 	if (get_paths(env, NULL, env->start, NULL) == 1)
 		return ;

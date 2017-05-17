@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 14:58:04 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 21:25:18 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/17 16:49:54 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ typedef struct		s_pipe
 	struct s_pipe	*next;
 }					t_pipe;
 
+typedef struct		s_ant
+{
+	int				id;
+	t_path			*cur_path;
+	t_track			*cur_track;
+	struct s_ant	*next;
+}					t_ant;
+
 typedef struct		s_env
 {
 	int				ants;
@@ -71,6 +79,8 @@ typedef struct		s_env
 	t_path			*final_path;
 }					t_env;
 
+void	ants_march(t_env *env);
+void	print_path(t_env *env);
 t_path	*get_final_paths(t_env *env, int max);
 int		get_paths(t_env *env, t_track *trail, t_room *room, t_link *tmp2);
 void	algo_this(t_env *env);

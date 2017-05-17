@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 20:07:23 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/14 21:23:43 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/17 13:48:18 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,34 @@ int		get_size_link(t_link *link)
 		link = link->next;
 	}
 	return (i);
+}
+
+void	print_path(t_env *env)
+{
+	int		i;
+	t_path 	*tmp;
+	t_track *tmp2;
+
+	tmp = env->final_path;
+	i = 1;
+	if (tmp == NULL)
+	{
+		error("NO PATHS");
+		return ;
+	}
+	while (tmp != NULL)
+	{
+		tmp2 = tmp->tracks;
+		ft_printf("Path [n.%d] | ", i);
+		while (tmp2)
+		{
+			ft_putstr(tmp2->room->name);
+			if (tmp2->next)
+				ft_putstr(" -> ");
+			tmp2 = tmp2->next;
+		}
+		ft_putstr("\n");
+		++i;
+		tmp = tmp->next;
+	}
 }
