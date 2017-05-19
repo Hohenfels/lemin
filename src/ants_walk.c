@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 12:05:56 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/17 16:53:52 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/19 12:36:26 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,37 @@ t_ant		*create_ant(int id)
 	return (ant);
 }
 
-int			ant_loop(t_path *path_it, t_path *cur)
+int			ant_loop(t_path *path, t_path *cur)
 {
 	int			n;
 	int			ret;
 
 	n = cur->size - 1;
 	ret = 0;
-	while (path_it != cur)
+	while (path != cur)
 	{
-		ret += (n - (path_it->size - 2));
-		path_it = path_it->next;
+		ret += (n - (path->size - 2));
+		path = path->next;
 	}
 	return (ret);
 }
 
 int			select_path(t_ant *ant, t_env *env)
 {
-	t_path		*path_it;
+	t_path		*path;
 	int			ant_left;
 
 	ant_left = env->ants - ant->id + 1;
-	path_it = env->final_path;
-	while (path_it && path_it->visited)
-		path_it = path_it->next;
-	if (path_it == NULL)
+	path = env->final_path;
+	while (path && path->visited)
+		path = path->next;
+	if (path == NULL)
 		return (0);
-	if (ant_left <= ant_loop(env->final_path, path_it))
+	if (ant_left <= ant_loop(env->final_path, path))
 		return (0);
-	ant->cur_path = path_it;
-	ant->cur_track = path_it->tracks->next;
-	path_it->visited = 1;
+	ant->cur_path = path;
+	ant->cur_track = path->tracks->next;
+	path->visited = 1;
 	ft_putstr("L");
 	ft_putnbr(ant->id);
 	ft_putstr("-");

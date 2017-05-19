@@ -6,7 +6,7 @@
 /*   By: frenaud <frenaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:03:22 by frenaud           #+#    #+#             */
-/*   Updated: 2017/05/17 17:29:08 by frenaud          ###   ########.fr       */
+/*   Updated: 2017/05/19 15:48:14 by frenaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int			main(void)
 	env = parse_data();
 	manage_error(env);
 	algo_this(env);
-	//ants_march(env);
 	print_path(env);
+	ants_march(env);
 	return (0);
 }
